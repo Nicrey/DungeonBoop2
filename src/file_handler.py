@@ -12,6 +12,7 @@ import sys
 from canvas.abstract_canvas import AbstractCanvas
 from canvas.border_canvas import BorderCanvas
 from canvas.draw_canvas import DrawCanvas
+from canvas.grid_canvas import GridCanvas
 from canvas.icon_canvas import IconCanvas
 from canvas.text_canvas import TextCanvas
 from project.project import Layer, Project
@@ -107,6 +108,8 @@ def open_project_by_path(project_path, controller):
                         canvas = TextCanvas(parent_display=controller.canvas_controller)
                     if i == 3:
                         canvas = BorderCanvas(parent_display=controller.canvas_controller, draw_canvas=draw_canvas)
+                    if i == 4:
+                        canvas = GridCanvas(parent_display=controller.canvas_controller, draw_canvas=draw_canvas)
                     canvas.pixmap = pixmap
                     canvases.append(canvas)
             

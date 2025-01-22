@@ -4,6 +4,7 @@ from PySide6.QtCore import Qt
 
 from canvas.border_canvas import BorderCanvas
 from canvas.draw_canvas import DrawCanvas
+from canvas.grid_canvas import GridCanvas
 from canvas.icon_canvas import IconCanvas
 from canvas.text_canvas import TextCanvas
 
@@ -16,6 +17,7 @@ class Layer:
         self.icon_canvas = IconCanvas(parent_display=controller.canvas_controller)
         self.text_canvas = TextCanvas(parent_display=controller.canvas_controller)
         self.border_canvas = BorderCanvas(parent_display=controller.canvas_controller, draw_canvas=self.draw_canvas)
+        self.grid_canvas = GridCanvas(parent_display=controller.canvas_controller, draw_canvas=self.draw_canvas)
 
 
     def get_canvases(self):
@@ -23,7 +25,8 @@ class Layer:
             self.draw_canvas,
             self.icon_canvas,
             self.text_canvas,
-            self.border_canvas
+            self.border_canvas,
+            self.grid_canvas
         ]
     
     def set_canvases(self, canvas_list):
@@ -31,6 +34,7 @@ class Layer:
         self.icon_canvas = canvas_list[1]
         self.text_canvas = canvas_list[2]
         self.border_canvas = canvas_list[3]
+        self.grid_canvas = canvas_list[4]
 
     def get_preview_image(self):
         return self.get_combined_image(preview=True)

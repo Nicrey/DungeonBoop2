@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import ( QWidget)
 from PySide6.QtGui import QPainter, QPixmap, QMouseEvent, QImage, QColor
-from PySide6.QtCore import Qt, QPoint, QRect
+from PySide6.QtCore import Qt, QPoint, QRect, QSize
 
 
 from ui.toolbars.tools import IconTool
@@ -20,7 +20,7 @@ class IconCanvas(QWidget):
 
         self.icon = QPixmap("../resources/icons/down.png")
         self.icon_size = 50
-        
+        self.color_tint = QColor(0,0,0,0)
         self.eraser_size = 32
         self.erasing = False
 
@@ -53,16 +53,16 @@ class IconCanvas(QWidget):
         if event.button() == Qt.LeftButton and self.get_tool() == IconTool.ADD_ICON:
             painter = QPainter(self.pixmap)
             self.draw_icon(painter, event.pos())
-            if self.parent_display:
-                self.parent_display.update_active_canvas()
+            self.parent_display.canvas_changes()
         
         if self.get_tool() == IconTool.REMOVE_ICON and event.button() == Qt.LeftButton:
             self.erasing = False
+            self.parent_display.canvas_changes()
 
     def paint(self, painter):
         if self.preview_position and self.get_tool() == IconTool.ADD_ICON:
             painter.setOpacity(0.5)  # Set transparency for the preview
-            self.draw_icon(painter, self.preview_position)
+            self.draw_icon(painter, self.preview_position, preview=True)
             painter.setOpacity(1.0)  # Reset opacity
         if self.preview_position and self.get_tool() == IconTool.REMOVE_ICON:
             self.draw_eraser_preview(painter)
@@ -71,16 +71,21 @@ class IconCanvas(QWidget):
     def update_options(self):
         self.options = self.parent_display.controller.get_options()
         if self.get_tool() == IconTool.ADD_ICON:
-            self.icon = self.options[1].get_icon()
+            self.icon = self.options[2].get_icon()
+            self.color_tint = self.options[1].color
             self.icon_size = self.options[0].current_size
             self.erasing = False
         if self.get_tool() == IconTool.REMOVE_ICON:
             self.eraser_size = self.options[0].current_size
             
-    def draw_icon(self, painter, position):
+    def draw_icon(self, painter, position, preview=False):
         scaled_icon = self.icon.scaled(self.icon_size, self.icon_size, Qt.KeepAspectRatio)
         position = position - QPoint(self.icon_size // 2, self.icon_size // 2)
         painter.drawPixmap(position, scaled_icon)
+        if not preview:
+            painter.setBrush(self.color_tint)  # Red color with 50% opacity
+            painter.setPen(Qt.NoPen)  # No border
+            painter.drawRect(QRect(position, QSize(self.icon_size, self.icon_size)))
     
     def erase(self):
         painter = QPainter(self.pixmap)
@@ -95,3 +100,4 @@ class IconCanvas(QWidget):
         painter.setPen(QColor(0, 0, 0))  # Black border for the rectangle
         rect_top_left = self.preview_position - QPoint(self.eraser_size // 2, self.eraser_size // 2)
         painter.drawRect(rect_top_left.x(), rect_top_left.y(), self.eraser_size, self.eraser_size)
+    

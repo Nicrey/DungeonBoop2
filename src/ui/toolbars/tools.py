@@ -11,7 +11,9 @@ class DrawTool(Enum):
     SUBTRACT = "-"
     RECT_ADD = "R+"
     CIRCLE_ADD = "C+"
-    
+    GRID_RECT_ADD = "GR+"
+    GRID_RECT_SUBTRACT = "GR-"
+
 class IconTool(Enum):
     ADD_ICON = "+"
     REMOVE_ICON = "-"

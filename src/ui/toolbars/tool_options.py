@@ -1,8 +1,8 @@
 from typing import List
 from PySide6.QtWidgets import (
-    QSlider,QPushButton, QLabel, QLineEdit
+    QSlider,QPushButton, QLabel, QLineEdit, QFontComboBox, QComboBox
 )
-from PySide6.QtGui import QPixmap,QIcon
+from PySide6.QtGui import QPixmap,QIcon, QFontDatabase, QColor
 from PySide6.QtCore import Qt   
 
 # Tool options for third layer toolbar
@@ -88,22 +88,26 @@ class IconSelectOption:
 
 # For Text Tools
 class FontSelectOption:
-    font_list: List[str] = []
-    selected_idx: int = 0
+    font_list: List[str]
+    selected_font = None
 
     def __init__(self,name, controller):
         self.name = name
         self.controller = controller
+        self.font_list = QFontDatabase().families()
 
     def get_font(self):
-        return self.font_list[self.selected_idx]
+        return self.selected_font
 
-    def select_font(self, new_idx):
-        self.selected_idx = new_idx
+    def select_font(self, font):
+        self.selected_font = font.family()
         self.controller.options_update()
     
     def get_widgets(self):
         widgets = []
+        self.font_combo = QFontComboBox()
+        self.font_combo.currentFontChanged.connect(self.select_font)
+        widgets = [self.font_combo]
         return widgets
 
 class TextOption:
@@ -122,6 +126,38 @@ class TextOption:
         self.text_input.setPlaceholderText("Text eingeben") 
         self.text_input.textEdited.connect(self.set_text)
         self.widgets = [self.text_input]
+
+    def get_widgets(self):
+        self.init_widgets()
+        return self.widgets
+
+class ColorOption:
+    color: QColor = QColor(0, 0, 0, 0)  # Default to red
+
+    def __init__(self, name, controller):
+        self.name = name
+        self.controller = controller
+        self.colors = {
+            "None": QColor(0,0,0, 0),
+            "Red": QColor(255, 0, 0, 100),
+            "Blue": QColor(0, 0, 255, 100),
+            "Green": QColor(0, 255, 0, 100),
+            "Purple": QColor(128, 0, 128, 100),
+            "Orange": QColor(255, 165, 0, 100),
+            "Yellow": QColor(255, 255, 0, 100),
+            "Cyan": QColor(0, 255, 255, 100),
+            "Magenta": QColor(255, 0, 255, 100)
+        }
+
+    def select_color(self, color_name):
+        self.color = self.colors[color_name]
+        self.controller.options_update()
+
+    def init_widgets(self):
+        self.color_combo = QComboBox()
+        self.color_combo.addItems(self.colors.keys())
+        self.color_combo.currentTextChanged.connect(self.select_color)
+        self.widgets = [self.color_combo]
 
     def get_widgets(self):
         self.init_widgets()

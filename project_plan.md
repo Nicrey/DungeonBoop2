@@ -27,4 +27,3 @@ Grundriss Layer
 		- Füllfunktion um größere Bereiche schnell zu füllen
 	- Ziehen von Räumen als Polygone
 
-	

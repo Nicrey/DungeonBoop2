@@ -9,7 +9,8 @@ from canvas.canvas_controller import CanvasController
 from project.project import Project
 from ui.layer_preview import LayerPreview
 from ui.menu_bar import FileMenu
-from ui.toolbars.tool_options import (FontSelectOption, IconSelectOption,
+from ui.shortcuts import init_shortcuts
+from ui.toolbars.tool_options import (ColorOption, FontSelectOption, IconSelectOption,
                                       SizeOption, TextOption)
 from ui.toolbars.toolbar import (highlight_action, setup_layer_toolbar,
                                  setup_modebar, setup_third_layer_toolbar,
@@ -27,13 +28,13 @@ class MainWindow(QMainWindow):
         # MenuBar
         self.menu_bar = FileMenu(self)
         self.setMenuBar(self.menu_bar)
+        self.canvas_controller = CanvasController(self)
 
-        # Toolbars
+        init_shortcuts(self)
         self.mode = Mode.DRAW
         self.current_tool = DrawTool.ADD
         self.setup_tool_option_map()
         
-        self.canvas_controller = CanvasController(self)
 
         # Project
         self.project = Project()
@@ -41,6 +42,7 @@ class MainWindow(QMainWindow):
         
         self.canvas_controller.update_layer()
         
+        # Toolbars
         self.modebar = setup_modebar(self)
         self.addToolBar(Qt.TopToolBarArea, self.modebar)
 
@@ -144,14 +146,20 @@ class MainWindow(QMainWindow):
             DrawTool.SUBTRACT: [SizeOption("Eraser Size", self)],
             DrawTool.RECT_ADD: [SizeOption("X",self), SizeOption("Y",self)],
             DrawTool.CIRCLE_ADD: [SizeOption("X",self), SizeOption("Y",self)],
-            IconTool.ADD_ICON: [SizeOption("Size",self), IconSelectOption("Icon",self)],
+            DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self)],
+            DrawTool.GRID_RECT_SUBTRACT: [SizeOption("Grid Size", self)],
+            IconTool.ADD_ICON: [SizeOption("Size",self), ColorOption("Tint", self), IconSelectOption("Icon",self)],
             IconTool.REMOVE_ICON: [SizeOption("Size", self)],
             TextTool.ADD_TEXT: [SizeOption("FontSize",self), FontSelectOption("Font",self), TextOption("Text", self)],
             TextTool.REMOVE_TEXT: [SizeOption("Size", self)]
+            
         }
     
     def get_options(self):
         return self.THIRD_LAYER_TOOL_MAP.get(self.current_tool, [])
+
+    def undo(self):
+        self.canvas_controller.canvas_history.undo()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

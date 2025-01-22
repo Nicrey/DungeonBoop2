@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QPainter, QMouseEvent
 
+from canvas.canvas_history import CanvasHistory
 from ui.toolbars.tools import Mode
 
 
@@ -16,15 +17,15 @@ class CanvasController(QWidget):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller 
+        self.canvas_history = None
         self.canvases = []
         self.setMouseTracking(True)
 
-    def update_active_canvas(self):
-        self.update()
-
     def update_layer(self):
         self.canvases = self.controller.get_current_layer().get_canvases()
-        self.update_active_canvas()
+        self.update()
+        self.canvas_history = CanvasHistory(self.controller, self)
+        self.canvas_history.trigger_all()
      
     def active_canvas_idx(self):
         return 0 if self.controller.mode == Mode.DRAW else (1 if self.controller.mode == Mode.ICON else 2)
@@ -55,3 +56,10 @@ class CanvasController(QWidget):
 
     def update_options(self):
         self.canvases[self.active_canvas_idx()].update_options()
+
+    def canvas_changes(self):
+        self.canvas_history.trigger()   
+    
+    def undo_complete(self):
+        if self.active_canvas_idx() == 0:
+            self.canvases[3].blacken_near_transparent()

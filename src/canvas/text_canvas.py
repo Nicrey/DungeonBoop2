@@ -47,10 +47,11 @@ class TextCanvas(QWidget):
         if event.button() == Qt.LeftButton and self.get_tool() == TextTool.ADD_TEXT:
             painter = QPainter(self.pixmap)
             self.draw_text(painter, event.pos())
-            self.parent_display.update_active_canvas()
+            self.parent_display.canvas_changes()
 
         if self.get_tool() == TextTool.REMOVE_TEXT and event.button() == Qt.LeftButton:
             self.erasing = False
+            self.parent_display.canvas_changes()
 
     def paint(self, painter):
         if self.preview_position and self.get_tool() == TextTool.ADD_TEXT:
@@ -65,6 +66,7 @@ class TextCanvas(QWidget):
         self.options = self.parent_display.controller.get_options()
         if self.get_tool() == TextTool.ADD_TEXT:
             self.text = self.options[2].text
+            self.font = self.options[1].get_font()
             self.text_size = self.options[0].current_size
             self.erasing = False
         if self.get_tool() == TextTool.REMOVE_TEXT:
@@ -75,6 +77,7 @@ class TextCanvas(QWidget):
         painter.setPen(Qt.black)
         font = painter.font()
         font.setPointSize(self.text_size)
+        font.setFamily(self.font)
         painter.setFont(font)
         painter.drawText(position, self.text)
     
@@ -91,3 +94,4 @@ class TextCanvas(QWidget):
         painter.setPen(QColor(0, 0, 0))  # Black border for the rectangle
         rect_top_left = self.preview_position - QPoint(self.eraser_size // 2, self.eraser_size // 2)
         painter.drawRect(rect_top_left.x(), rect_top_left.y(), self.eraser_size, self.eraser_size)
+

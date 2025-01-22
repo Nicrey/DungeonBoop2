@@ -28,6 +28,9 @@ class FileMenu(QMenuBar):
         open_action = file_menu.addAction("Open")
         open_action.triggered.connect(self.open_project)
 
+        undo = file_menu.addAction("Undo")  
+        undo.triggered.connect(self.controller.undo)
+
     def save_project(self):
         save_project(self.controller.project, self.controller)
 
@@ -36,3 +39,4 @@ class FileMenu(QMenuBar):
 
     def open_project(self):
         open_project(self.controller)
+
