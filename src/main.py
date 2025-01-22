@@ -143,7 +143,7 @@ class MainWindow(QMainWindow):
             DrawTool.ADD : [SizeOption("Brush Size", self)],
             DrawTool.SUBTRACT: [SizeOption("Eraser Size", self)],
             DrawTool.RECT_ADD: [SizeOption("X",self), SizeOption("Y",self)],
-            DrawTool.RECT_SUBTRACT: [SizeOption("X",self), SizeOption("Y",self)],
+            DrawTool.CIRCLE_ADD: [SizeOption("X",self), SizeOption("Y",self)],
             IconTool.ADD_ICON: [SizeOption("Size",self), IconSelectOption("Icon",self)],
             IconTool.REMOVE_ICON: [SizeOption("Size", self)],
             TextTool.ADD_TEXT: [SizeOption("FontSize",self), FontSelectOption("Font",self), TextOption("Text", self)],

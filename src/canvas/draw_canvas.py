@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import ( QWidget)
-from PySide6.QtGui import QPainter, QPixmap, QMouseEvent, QImage, QColor
+from PySide6.QtGui import QPainter, QPixmap, QPen, QBrush, QMouseEvent, QImage, QColor
 from PySide6.QtCore import Qt, QPoint, QRect
 
 
@@ -24,8 +24,15 @@ class DrawCanvas(QWidget):
         self.eraser_size = 32
         self.erasing = False
 
+        self.rect_x = 32
+        self.rect_y = 32
+
+        self.circle_x = 32
+        self.circle_y = 32
+
         self.options = self.parent_display.controller.get_options()
         self.preview_position = None
+
         
 
     def get_tool(self):
@@ -45,26 +52,36 @@ class DrawCanvas(QWidget):
             self.erase()
         if self.drawing:
             painter = QPainter(self.pixmap)
-            self.draw_rect(painter, event.pos())
+            self.draw_rect(painter, event.pos(), self.draw_size)
             painter.end()
 
-    
-    def leaveEvent(self, event):
-        # Clear the preview when the mouse leaves the canvas
-        print("LEave")
-        self.preview_position = None
-        self.parent_display.update()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         if self.get_tool() == DrawTool.SUBTRACT and event.button() == Qt.LeftButton:
             self.erasing = False
         if self.get_tool() == DrawTool.ADD and event.button() == Qt.LeftButton:
             self.drawing = False
+        if self.get_tool() == DrawTool.RECT_ADD and event.button() == Qt.LeftButton:
+            painter = QPainter(self.pixmap)
+            self.draw_rect(painter, event.pos(), self.rect_x, self.rect_y)
+            self.parent_display.update()
+        if self.get_tool() == DrawTool.CIRCLE_ADD and event.button() == Qt.LeftButton:
+            painter = QPainter(self.pixmap)
+            self.draw_circle(painter, event.pos(), self.circle_x, self.circle_y)
+            self.parent_display.update()
 
     def paint(self, painter):
         if self.preview_position and self.get_tool() == DrawTool.ADD:
             painter.setOpacity(0.5)  # Set transparency for the preview
-            self.draw_rect(painter, self.preview_position)
+            self.draw_rect(painter, self.preview_position, self.draw_size, preview=True)
+            painter.setOpacity(1.0)  # Reset opacity
+        if self.preview_position and self.get_tool() == DrawTool.RECT_ADD:
+            painter.setOpacity(0.5)  # Set transparency for the preview
+            self.draw_rect(painter, self.preview_position, self.rect_x, self.rect_y, True)
+            painter.setOpacity(1.0)  # Reset opacity
+        if self.preview_position and self.get_tool() == DrawTool.CIRCLE_ADD:
+            painter.setOpacity(0.5)  # Set transparency for the preview
+            self.draw_circle(painter, self.preview_position, self.circle_x, self.circle_y, True)
             painter.setOpacity(1.0)  # Reset opacity
         if self.preview_position and self.get_tool() == DrawTool.SUBTRACT:
             self.draw_eraser_preview(painter)
@@ -77,16 +94,50 @@ class DrawCanvas(QWidget):
             self.erasing = False
         if self.get_tool() == DrawTool.SUBTRACT:
             self.eraser_size = self.options[0].current_size
+        if self.get_tool() == DrawTool.RECT_ADD:
+            self.rect_x = self.options[0].current_size
+            self.rect_y = self.options[1].current_size
+        if self.get_tool() == DrawTool.CIRCLE_ADD:
+            self.circle_x = self.options[0].current_size
+            self.circle_y = self.options[1].current_size
+        
     
     ###############
     # Basic Drawing
     ###############
 
-    def draw_rect(self, painter, position):
-        rect_top_left = position - QPoint(self.draw_size // 2, self.draw_size // 2)
-        rect = QRect(rect_top_left.x(), rect_top_left.y(),self.draw_size, self.draw_size)
-        painter.fillRect(rect, QColor(100, 100, 100, 255))  # Fill the rectangle with transparency (alpha = 0)
-    
+    def draw_rect(self, painter, position, size, optional_size_y = None, preview=False):
+        if preview:
+            pen = QPen(QColor(0,0,0,255))
+            pen.setWidth(2)
+            painter.setPen(pen)
+        else:
+            pen = QPen(QColor(0,0,0,0))
+            pen.setWidth(1)
+            painter.setPen(pen)
+        brush = QBrush(QColor(230,230,230,255))
+        painter.setBrush(brush)
+        size_y = size if optional_size_y is None else optional_size_y
+        rect_top_left = position - QPoint(size // 2, size_y // 2)
+        rect = QRect(rect_top_left.x(), rect_top_left.y(),size, size_y)
+        painter.drawRect(rect)  
+
+    def draw_circle(self, painter, position, size, optional_size_y = None, preview=False):
+        if preview:
+            pen = QPen(QColor(0,0,0,255))
+            pen.setWidth(2)
+            painter.setPen(pen)
+        else:
+            pen = QPen(QColor(0,0,0,0))
+            pen.setWidth(1)
+            painter.setPen(pen)
+        brush = QBrush(QColor(230,230,230,255))
+        painter.setBrush(brush)
+        size_y = size if optional_size_y is None else optional_size_y
+        rect_top_left = position - QPoint(size // 2, size_y // 2)
+        rect = QRect(rect_top_left.x(), rect_top_left.y(),size, size_y)
+        painter.drawEllipse(rect)  
+
     ###################
     # ERASING
     ###################

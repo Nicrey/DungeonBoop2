@@ -10,10 +10,8 @@ class DrawTool(Enum):
     ADD = "+"
     SUBTRACT = "-"
     RECT_ADD = "R+"
-    RECT_SUBTRACT = "R-"
     CIRCLE_ADD = "C+"
-    CIRCLE_SUBTRACT = "C-"
-
+    
 class IconTool(Enum):
     ADD_ICON = "+"
     REMOVE_ICON = "-"

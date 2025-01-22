@@ -10,6 +10,7 @@ import sys
 
 
 from canvas.abstract_canvas import AbstractCanvas
+from canvas.border_canvas import BorderCanvas
 from canvas.draw_canvas import DrawCanvas
 from canvas.icon_canvas import IconCanvas
 from canvas.text_canvas import TextCanvas
@@ -88,6 +89,7 @@ def open_project_by_path(project_path, controller):
 
             # Load canvases for this layer
             canvases = []
+            draw_canvas = None
             for i, canvas_file in enumerate(sorted(os.listdir(layer_path))):
                 if canvas_file.endswith(".png"):
                     canvas_path = os.path.join(layer_path, canvas_file)
@@ -98,10 +100,13 @@ def open_project_by_path(project_path, controller):
                     # Create a Canvas object (assuming you have a Canvas class)
                     if i == 0:
                         canvas = DrawCanvas(parent_display=controller.canvas_controller)
+                        draw_canvas = canvas
                     if i == 1:
                         canvas = IconCanvas(parent_display=controller.canvas_controller)
                     if i == 2:
                         canvas = TextCanvas(parent_display=controller.canvas_controller)
+                    if i == 3:
+                        canvas = BorderCanvas(parent_display=controller.canvas_controller, draw_canvas=draw_canvas)
                     canvas.pixmap = pixmap
                     canvases.append(canvas)
             

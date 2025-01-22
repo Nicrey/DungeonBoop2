@@ -12,7 +12,7 @@ class CanvasController(QWidget):
     them all at the same time and catch events for the active one
     Also draws inactive canvases greyed out
     """
-
+    BORDER_INDEX = 3
     def __init__(self, controller):
         super().__init__()
         self.controller = controller 
@@ -32,7 +32,7 @@ class CanvasController(QWidget):
     def paintEvent(self, event):
         painter = QPainter(self)
         for index, canvas in enumerate(self.canvases):
-            if index == self.active_canvas_idx():
+            if index == self.active_canvas_idx() or index == self.BORDER_INDEX:
                 # Draw active canvas normally
                 painter.drawImage(0, 0, canvas.pixmap)
                 canvas.paint(painter)
@@ -51,6 +51,7 @@ class CanvasController(QWidget):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         self.canvases[self.active_canvas_idx()].mouseReleaseEvent(event)
+        self.canvases[3].blacken_near_transparent()
 
     def update_options(self):
         self.canvases[self.active_canvas_idx()].update_options()
