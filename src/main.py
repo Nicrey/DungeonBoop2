@@ -149,6 +149,7 @@ class MainWindow(QMainWindow):
             DrawTool.CIRCLE_ADD: [SizeOption("X",self), SizeOption("Y",self)],
             DrawTool.CIRCLE_DRAG: [CheckboxOption("Circle", self),CheckboxOption("By Midpoint", self)],
             DrawTool.PATH_DRAW: [SizeOption("Path Width", self), CheckboxOption("Snap", self)],
+            DrawTool.POLYGON_DRAW: [CheckboxOption("Snap", self)],
             DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self)],
             DrawTool.GRID_RECT_SUBTRACT: [SizeOption("Grid Size", self)],
             IconTool.ADD_ICON: [SizeOption("Size",self), ColorOption("Tint", self), IconSelectOption("Icon",self)],

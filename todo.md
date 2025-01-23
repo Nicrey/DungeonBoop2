@@ -1,7 +1,5 @@
 * Priority
     * Polygone mit mehreren Punkten
-    * Drawing Mode: Line => Rect that is defined by two midpoints of opposing sides and one size
-        * Can be snapped to degrees
 
 
 Other:

@@ -10,6 +10,7 @@ from canvas.draw_tools.freehand_erase import FreehandEraser
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
 from canvas.draw_tools.grid_rect_eraser import GridRectErase
 from canvas.draw_tools.path_tool import PathTool
+from canvas.draw_tools.polygon_tool import PolygonTool
 from canvas.draw_tools.rect_drag import RectDrag
 from canvas.draw_tools.rect_inserter import RectInserter
 from ui.toolbars.tools import DrawTool
@@ -38,6 +39,7 @@ class DrawCanvas(QWidget):
             CircleInserter(self, DrawTool.CIRCLE_ADD, Qt.LeftButton),
             CircleDrag(self, DrawTool.CIRCLE_DRAG, Qt.LeftButton),
             PathTool(self, DrawTool.PATH_DRAW, Qt.LeftButton),
+            PolygonTool(self, DrawTool.POLYGON_DRAW, Qt.LeftButton, Qt.RightButton),
             GridRectDraw(self, DrawTool.GRID_RECT_ADD, Qt.LeftButton),
             GridRectErase(self, DrawTool.GRID_RECT_SUBTRACT, Qt.LeftButton)
         ]
@@ -53,6 +55,9 @@ class DrawCanvas(QWidget):
         for tool in self.tools:
             if tool.associated_tool == self.get_tool() and event.button() == tool.draw_button:
                 tool.mouse_press(event)
+                return
+            if tool.associated_tool == self.get_tool() and event.button() == tool.secondary_button:
+                tool.secondary_press(event)
                 return
 
     def mouseMoveEvent(self, event: QMouseEvent):

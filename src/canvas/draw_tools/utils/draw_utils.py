@@ -8,17 +8,22 @@ from PySide6.QtCore import Qt, QPoint, QRect
 #   Misc Utils
 ############################
 
+def dist(pos1, pos2):
+    dx = pos2.x() - pos1.x()
+    dy = pos2.y() - pos1.y()
+    return math.sqrt(dx*dx + dy*dy)
 
-def snap_to_angle(pos1, pos2):
+def snap_to_angle(pos1: QPoint, pos2):
     """
     Snaps a position to the next 15 degree angle
     """
     dx = pos2.x() - pos1.x()
     dy = pos2.y() - pos1.y()
-    dist = math.sqrt(dx*dx + dy*dy)
+    distance = dist(pos1,pos2)
+    
     angle = math.atan2(dy, dx)
     angle = round(angle / (math.pi / 16)) * (math.pi / 16)
-    return pos1 + QPoint(round(math.cos(angle) * dist), round(math.sin(angle) * dist))
+    return pos1 + QPoint(round(math.cos(angle) * distance), round(math.sin(angle) * distance))
 
 def prepare_painter(preview, painter, canvas=None):
     if not painter:
