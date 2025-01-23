@@ -15,7 +15,7 @@ class PolygonTool(Tool):
         point = event.pos()
         if self.points:
             point = snap_to_angle(self.points[-1], event.pos()) if self.snap else event.pos()
-            distance = dist(point, self.points[0])
+            distance = dist(event.pos(), self.points[0])
             if distance < 10 and len(self.points) > 2:
                 draw_poly(self.points, self.canvas)
                 self.points = []

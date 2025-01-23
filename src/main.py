@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QInputDialog, QLineEdit, QMainWindow, QVBoxLayout, QWidget)
 
 from canvas.canvas_controller import CanvasController
+from file_handler import save_project
 from project.project import Project
 from ui.layer_preview import LayerPreview
 from ui.menu_bar import FileMenu
@@ -156,7 +157,6 @@ class MainWindow(QMainWindow):
             IconTool.REMOVE_ICON: [SizeOption("Size", self)],
             TextTool.ADD_TEXT: [SizeOption("FontSize",self), FontSelectOption("Font",self), TextOption("Text", self)],
             TextTool.REMOVE_TEXT: [SizeOption("Size", self)]
-            
         }
     
     def get_options(self):
@@ -164,6 +164,9 @@ class MainWindow(QMainWindow):
 
     def undo(self):
         self.canvas_controller.canvas_history.undo()
+    
+    def save_project(self):
+        save_project(controller=self, p=self.project)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

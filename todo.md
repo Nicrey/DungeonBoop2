@@ -1,6 +1,6 @@
 * Priority
-    * Polygone mit mehreren Punkten
-
+    * Dreieck grid
+    * Grid rotation
 
 Other:
 * Rect Rotation, Circle Rotation
@@ -8,7 +8,5 @@ Other:
 * Allow sliders to be linked
 * Different eraser type (Circle)
 * Fill Function
-* Grid rotation
-* Dreieck grid
 * (Shortcuts (Sizes +-, Save!))
 * (Redo)
