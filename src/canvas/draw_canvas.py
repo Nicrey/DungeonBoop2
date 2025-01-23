@@ -3,11 +3,13 @@ from PySide6.QtGui import QPainter, QPixmap, QPen, QBrush, QMouseEvent, QImage, 
 from PySide6.QtCore import Qt, QPoint, QRect
 
 
+from canvas.draw_tools.circle_drag import CircleDrag
 from canvas.draw_tools.circle_inserter import CircleInserter
 from canvas.draw_tools.freehand_draw import FreehandDraw
 from canvas.draw_tools.freehand_erase import FreehandEraser
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
 from canvas.draw_tools.grid_rect_eraser import GridRectErase
+from canvas.draw_tools.rect_drag import RectDrag
 from canvas.draw_tools.rect_inserter import RectInserter
 from ui.toolbars.tools import DrawTool
 
@@ -31,9 +33,11 @@ class DrawCanvas(QWidget):
             FreehandDraw(self, DrawTool.ADD, Qt.LeftButton),
             FreehandEraser(self, DrawTool.SUBTRACT, Qt.LeftButton),
             RectInserter(self, DrawTool.RECT_ADD, Qt.LeftButton),
+            RectDrag(self, DrawTool.RECT_DRAG, Qt.LeftButton),
             CircleInserter(self, DrawTool.CIRCLE_ADD, Qt.LeftButton),
+            CircleDrag(self, DrawTool.CIRCLE_DRAG, Qt.LeftButton),
             GridRectDraw(self, DrawTool.GRID_RECT_ADD, Qt.LeftButton),
-            GridRectErase(self, DrawTool.GRID_RECT_SUBTRACT, Qt.LeftButton) 
+            GridRectErase(self, DrawTool.GRID_RECT_SUBTRACT, Qt.LeftButton)
         ]
 
     def register_grid(self, grid_canvas):
@@ -56,6 +60,7 @@ class DrawCanvas(QWidget):
         for tool in self.tools:
             if tool.associated_tool == self.get_tool():
                 tool.mouse_move(event)
+                return
 
 
     def mouseReleaseEvent(self, event: QMouseEvent):
@@ -70,6 +75,7 @@ class DrawCanvas(QWidget):
         for tool in self.tools:
             if tool.associated_tool == self.get_tool():
                 tool.paint(painter)
+                return
 
 
     def update_options(self):

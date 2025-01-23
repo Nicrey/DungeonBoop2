@@ -1,7 +1,7 @@
 
 
 from canvas.draw_tools.abstract_tool import Tool
-from canvas.draw_tools.utils.draw_utils import draw_rect
+from canvas.draw_tools.utils.draw_utils import draw_rect, get_rect
 
 
 
@@ -19,11 +19,13 @@ class FreehandDraw(Tool):
 
     def mouse_move(self, event):
         if self.drawing:
-            draw_rect(self.canvas, event.pos(), self.draw_size)
+            rect = get_rect(event.pos(), self.draw_size)
+            draw_rect(self.canvas, rect)
 
     def paint(self, painter):
         painter.setOpacity(0.5)
-        draw_rect(self.canvas, self.canvas.preview_position, self.draw_size, preview=True, painter=painter)
+        rect = get_rect(self.canvas.preview_position, self.draw_size)
+        draw_rect(self.canvas, rect, preview=True, painter=painter)
         painter.setOpacity(1.0)
 
     def update_options(self, options):

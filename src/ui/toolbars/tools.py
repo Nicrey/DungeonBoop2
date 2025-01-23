@@ -10,7 +10,9 @@ class DrawTool(Enum):
     ADD = "+"
     SUBTRACT = "-"
     RECT_ADD = "R+"
+    RECT_DRAG = "RD"
     CIRCLE_ADD = "C+"
+    CIRCLE_DRAG = "CD"
     GRID_RECT_ADD = "GR+"
     GRID_RECT_SUBTRACT = "GR-"
 

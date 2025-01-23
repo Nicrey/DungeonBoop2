@@ -1,16 +1,16 @@
 * Priority
-    * Grid rotation
-    * Dreieck grid
-    * (Shortcuts (Sizes +-))
-    * (Redo)
+    * Polygone mit mehreren Punkten
+    * Drawing Mode: Line => Rect that is defined by two midpoints of opposing sides and one size
+        * Can be snapped to degrees
 
-Draw Modes to implement:
+
+Other:
 * Rect Rotation, Circle Rotation
 * Adjust sliders
 * Allow sliders to be linked
-* Different eraser type (Circle, By Grid)
-* Grid based drawing
-* Rect by dragging between two points
-* Circle by draggin from midpoint to endpoint
-* Polygone mit mehreren Punkten
+* Different eraser type (Circle)
 * Fill Function
+* Grid rotation
+* Dreieck grid
+* (Shortcuts (Sizes +-, Save!))
+* (Redo)

@@ -1,6 +1,6 @@
 from typing import List
 from PySide6.QtWidgets import (
-    QSlider,QPushButton, QLabel, QLineEdit, QFontComboBox, QComboBox
+    QSlider,QPushButton, QLabel, QLineEdit, QFontComboBox, QComboBox, QCheckBox
 )
 from PySide6.QtGui import QPixmap,QIcon, QFontDatabase, QColor
 from PySide6.QtCore import Qt   
@@ -158,6 +158,25 @@ class ColorOption:
         self.color_combo.addItems(self.colors.keys())
         self.color_combo.currentTextChanged.connect(self.select_color)
         self.widgets = [self.color_combo]
+
+    def get_widgets(self):
+        self.init_widgets()
+        return self.widgets
+    
+class CheckboxOption:
+    def __init__(self, name, controller):
+        self.name = name
+        self.controller = controller
+        self.checked = False
+
+    def toggle_checked(self, state):
+        self.checked = state == 2
+        self.controller.options_update()
+
+    def init_widgets(self):
+        self.checkbox = QCheckBox(self.name)
+        self.checkbox.stateChanged.connect(self.toggle_checked)
+        self.widgets = [self.checkbox]
 
     def get_widgets(self):
         self.init_widgets()

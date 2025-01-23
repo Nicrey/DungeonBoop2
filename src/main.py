@@ -10,7 +10,7 @@ from project.project import Project
 from ui.layer_preview import LayerPreview
 from ui.menu_bar import FileMenu
 from ui.shortcuts import init_shortcuts
-from ui.toolbars.tool_options import (ColorOption, FontSelectOption, IconSelectOption,
+from ui.toolbars.tool_options import (CheckboxOption, ColorOption, FontSelectOption, IconSelectOption,
                                       SizeOption, TextOption)
 from ui.toolbars.toolbar import (highlight_action, setup_layer_toolbar,
                                  setup_modebar, setup_third_layer_toolbar,
@@ -145,7 +145,9 @@ class MainWindow(QMainWindow):
             DrawTool.ADD : [SizeOption("Brush Size", self)],
             DrawTool.SUBTRACT: [SizeOption("Eraser Size", self)],
             DrawTool.RECT_ADD: [SizeOption("X",self), SizeOption("Y",self)],
+            DrawTool.RECT_DRAG: [CheckboxOption("Square", self), CheckboxOption("By Midpoint", self)],
             DrawTool.CIRCLE_ADD: [SizeOption("X",self), SizeOption("Y",self)],
+            DrawTool.CIRCLE_DRAG: [CheckboxOption("Circle", self),CheckboxOption("By Midpoint", self)],
             DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self)],
             DrawTool.GRID_RECT_SUBTRACT: [SizeOption("Grid Size", self)],
             IconTool.ADD_ICON: [SizeOption("Size",self), ColorOption("Tint", self), IconSelectOption("Icon",self)],
