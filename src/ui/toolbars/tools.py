@@ -13,6 +13,7 @@ class DrawTool(Enum):
     RECT_DRAG = "RD"
     CIRCLE_ADD = "C+"
     CIRCLE_DRAG = "CD"
+    PATH_DRAW = "P"
     GRID_RECT_ADD = "GR+"
     GRID_RECT_SUBTRACT = "GR-"
 

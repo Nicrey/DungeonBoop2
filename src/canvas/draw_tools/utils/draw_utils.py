@@ -1,3 +1,4 @@
+import math
 from PySide6.QtWidgets import ( QWidget)
 from PySide6.QtGui import QPainter, QPixmap, QPen, QBrush, QMouseEvent, QImage, QColor
 from PySide6.QtCore import Qt, QPoint, QRect
@@ -6,6 +7,18 @@ from PySide6.QtCore import Qt, QPoint, QRect
 ##############################
 #   Misc Utils
 ############################
+
+
+def snap_to_angle(pos1, pos2):
+    """
+    Snaps a position to the next 15 degree angle
+    """
+    dx = pos2.x() - pos1.x()
+    dy = pos2.y() - pos1.y()
+    dist = math.sqrt(dx*dx + dy*dy)
+    angle = math.atan2(dy, dx)
+    angle = round(angle / (math.pi / 16)) * (math.pi / 16)
+    return pos1 + QPoint(round(math.cos(angle) * dist), round(math.sin(angle) * dist))
 
 def prepare_painter(preview, painter, canvas=None):
     if not painter:
@@ -98,3 +111,4 @@ def draw_circle_2points(
     size_x, size_y = get_sizes_by_2pos(position_1, position_2, true_circle)
     rect = get_rect(position_1, size_x, size_y, by_midpoint)
     draw_circle(canvas, rect, preview, painter)
+

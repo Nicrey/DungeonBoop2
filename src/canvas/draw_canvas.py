@@ -9,6 +9,7 @@ from canvas.draw_tools.freehand_draw import FreehandDraw
 from canvas.draw_tools.freehand_erase import FreehandEraser
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
 from canvas.draw_tools.grid_rect_eraser import GridRectErase
+from canvas.draw_tools.path_tool import PathTool
 from canvas.draw_tools.rect_drag import RectDrag
 from canvas.draw_tools.rect_inserter import RectInserter
 from ui.toolbars.tools import DrawTool
@@ -36,6 +37,7 @@ class DrawCanvas(QWidget):
             RectDrag(self, DrawTool.RECT_DRAG, Qt.LeftButton),
             CircleInserter(self, DrawTool.CIRCLE_ADD, Qt.LeftButton),
             CircleDrag(self, DrawTool.CIRCLE_DRAG, Qt.LeftButton),
+            PathTool(self, DrawTool.PATH_DRAW, Qt.LeftButton),
             GridRectDraw(self, DrawTool.GRID_RECT_ADD, Qt.LeftButton),
             GridRectErase(self, DrawTool.GRID_RECT_SUBTRACT, Qt.LeftButton)
         ]
