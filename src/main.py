@@ -11,7 +11,7 @@ from project.project import Project
 from ui.layer_preview import LayerPreview
 from ui.menu_bar import FileMenu
 from ui.shortcuts import init_shortcuts
-from ui.toolbars.tool_options import (CheckboxOption, ColorOption, FontSelectOption, IconSelectOption,
+from ui.toolbars.tool_options import (CheckboxOption, ColorOption, FontSelectOption, IconSelectOption, LimitedSliderOption,
                                       SizeOption, TextOption)
 from ui.toolbars.toolbar import (highlight_action, setup_layer_toolbar,
                                  setup_modebar, setup_third_layer_toolbar,
@@ -151,7 +151,7 @@ class MainWindow(QMainWindow):
             DrawTool.CIRCLE_DRAG: [CheckboxOption("Circle", self),CheckboxOption("By Midpoint", self)],
             DrawTool.PATH_DRAW: [SizeOption("Path Width", self, 10, 5, 100), CheckboxOption("Snap", self)],
             DrawTool.POLYGON_DRAW: [CheckboxOption("Snap", self)],
-            DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self, sizes=[8,16,24,32,40,48,56,64]), SizeOption("Grid Rotation", self, sizes=[0,15,30,45,60,75,90])],
+            DrawTool.GRID_RECT_ADD: [LimitedSliderOption("Grid Size", self, values=[8,16,24,32,40,48,56,64]), LimitedSliderOption("Grid Rotation", self, values=[0,15,30,45,60,75,90])],
             IconTool.ADD_ICON: [SizeOption("Size",self, 25, 5, 50), ColorOption("Tint", self), IconSelectOption("Icon",self)],
             IconTool.REMOVE_ICON: [SizeOption("Size", self, 16, 4, 200)],
             TextTool.ADD_TEXT: [SizeOption("FontSize",self, 16, 4, 200), FontSelectOption("Font",self), TextOption("Text", self)],

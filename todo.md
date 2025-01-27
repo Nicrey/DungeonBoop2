@@ -1,5 +1,4 @@
 * Priority
-    * Adjust sliders
     * Grid snap for path
     * Grid snap for polygon
     * Grid snap for circle/Rect drag

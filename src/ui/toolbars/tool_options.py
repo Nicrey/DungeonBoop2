@@ -5,6 +5,40 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QPixmap,QIcon, QFontDatabase, QColor
 from PySide6.QtCore import Qt   
 
+
+class LimitedSliderOption:
+    current_value: int = 0
+    name: str
+    values = []
+
+    def __init__(self, name, controller, values = []):
+        self.name = name
+        self.controller = controller
+        self.values = values
+
+    def get_value(self):
+        return self.values[self.current_value]
+    
+    def init_widgets(self):
+        label = QLabel(self.name)
+        slider = QSlider(Qt.Horizontal)
+        slider.setRange(0, len(self.values)-1)
+        slider.setValue(0)
+        slider.setFixedWidth(150) 
+        size_label = QLabel(str(self.get_value()))
+        slider.valueChanged.connect(self.direct_update)
+        # Add widgets to the toolbar
+        self.widgets = [label, slider, size_label]
+
+    def direct_update(self, new_size):
+        self.current_value = new_size
+        self.widgets[2].setText(str(self.get_value()))
+        self.controller.options_update()
+
+    def get_widgets(self):
+        self.init_widgets()
+        return self.widgets
+    
 # Tool options for third layer toolbar
 # For Sizes in general
 class SizeOption:

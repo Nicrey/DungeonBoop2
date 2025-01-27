@@ -44,8 +44,8 @@ class GridRectDraw(Tool):
         self.try_erase_grid_rect(event)
 
     def update_options(self, options):
-        self.grid_size = options[0].current_size
-        self.grid_angle = options[1].current_size
+        self.grid_size = options[0].get_value()
+        self.grid_angle = options[1].get_value()
         self.canvas.grid_canvas.update_grid(self.grid_size, self.grid_angle)
         self.last_grid_x = None
         self.last_grid_y = None
