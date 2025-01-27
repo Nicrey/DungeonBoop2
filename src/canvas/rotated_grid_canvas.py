@@ -23,7 +23,7 @@ class RotatedGridCanvas(QWidget):
         self.grid_start = {}
         self.draw_canvas = draw_canvas
         self.draw_canvas.register_grid(self)
-        self.update_grid(16, 0)
+        self.update_grid(16, 16)
         
 
     def update_grid(self, grid_size, grid_angle):
@@ -36,7 +36,7 @@ class RotatedGridCanvas(QWidget):
             while(dy < self.height):
                 x,y= rotate_point(dx,dy, -grid_angle)
                 point = QPoint(x,y)
-                if point.x() < 0 or point.y() < 0 or point.x() > self.width or point.y() > self.height:
+                if point.x() < 0 - grid_size or point.y() < 0 -grid_size or point.x() > self.width + grid_size or point.y() > self.height + grid_size:
                     dy += grid_size
                     continue
                 self.grid_start[(dx//grid_size, dy//grid_size)] = QPoint(dx,dy)
