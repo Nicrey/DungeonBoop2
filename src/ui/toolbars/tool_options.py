@@ -11,15 +11,29 @@ class SizeOption:
     current_size: int = 16
     name: str
 
-    def __init__(self,name, controller):
+    def __init__(self,name, controller, start_size = 15, min = 0, max = 50, sizes = []):
+        """Creates a size option as a slider between values
+
+        Args:
+            name (_type_): Name of the option
+            controller (_type_): Controller (main.py)
+            start_size (_type_): The size at the start
+            min (_type_): The minimum size
+            max (_type_): The maximum size
+            sizes (_type_): A list of sizes the slider can take (for sliders with only a certain amount of sizes)
+        """
         self.name = name
         self.controller = controller
         self.widgets = []
+        self.current_size = start_size
+        self.min = min
+        self.max = max
+        self.sizes = sizes
 
     def init_widgets(self):
         label = QLabel(self.name)
         slider = QSlider(Qt.Horizontal)
-        slider.setRange(1, 50)
+        slider.setRange(self.min, self.max)
         slider.setValue(self.current_size)
         slider.setFixedWidth(150) 
         size_label = QLabel(str(self.current_size))

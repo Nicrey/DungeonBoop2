@@ -143,19 +143,19 @@ class MainWindow(QMainWindow):
     def setup_tool_option_map(self):
                 # Third Layer tool map
         self.THIRD_LAYER_TOOL_MAP = {
-            DrawTool.ADD : [SizeOption("Brush Size", self)],
-            DrawTool.SUBTRACT: [SizeOption("Eraser Size", self)],
-            DrawTool.RECT_ADD: [SizeOption("X",self), SizeOption("Y",self)],
+            DrawTool.ADD : [SizeOption("Brush Size", self, 16, 4, 200)],
+            DrawTool.SUBTRACT: [SizeOption("Eraser Size", self, 16, 4, 200)],
+            DrawTool.RECT_ADD: [SizeOption("X",self, 50, 5, 200), SizeOption("Y",self, 50, 5, 200)],
             DrawTool.RECT_DRAG: [CheckboxOption("Square", self), CheckboxOption("By Midpoint", self)],
-            DrawTool.CIRCLE_ADD: [SizeOption("X",self), SizeOption("Y",self)],
+            DrawTool.CIRCLE_ADD: [SizeOption("X",self, 50, 5, 200), SizeOption("Y",self, 50, 5, 200)],
             DrawTool.CIRCLE_DRAG: [CheckboxOption("Circle", self),CheckboxOption("By Midpoint", self)],
-            DrawTool.PATH_DRAW: [SizeOption("Path Width", self), CheckboxOption("Snap", self)],
+            DrawTool.PATH_DRAW: [SizeOption("Path Width", self, 10, 5, 100), CheckboxOption("Snap", self)],
             DrawTool.POLYGON_DRAW: [CheckboxOption("Snap", self)],
-            DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self), SizeOption("Grid Rotation", self)],
-            IconTool.ADD_ICON: [SizeOption("Size",self), ColorOption("Tint", self), IconSelectOption("Icon",self)],
-            IconTool.REMOVE_ICON: [SizeOption("Size", self)],
-            TextTool.ADD_TEXT: [SizeOption("FontSize",self), FontSelectOption("Font",self), TextOption("Text", self)],
-            TextTool.REMOVE_TEXT: [SizeOption("Size", self)]
+            DrawTool.GRID_RECT_ADD: [SizeOption("Grid Size", self, sizes=[8,16,24,32,40,48,56,64]), SizeOption("Grid Rotation", self, sizes=[0,15,30,45,60,75,90])],
+            IconTool.ADD_ICON: [SizeOption("Size",self, 25, 5, 50), ColorOption("Tint", self), IconSelectOption("Icon",self)],
+            IconTool.REMOVE_ICON: [SizeOption("Size", self, 16, 4, 200)],
+            TextTool.ADD_TEXT: [SizeOption("FontSize",self, 16, 4, 200), FontSelectOption("Font",self), TextOption("Text", self)],
+            TextTool.REMOVE_TEXT: [SizeOption("Size", self, 16, 4, 200)]
         }
     
     def get_options(self):

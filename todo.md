@@ -1,4 +1,5 @@
 * Priority
+    * Adjust sliders
     * Grid snap for path
     * Grid snap for polygon
     * Grid snap for circle/Rect drag
@@ -7,7 +8,6 @@
 
 Other:
 * Rect Rotation, Circle Rotation
-* Adjust sliders
 * Allow sliders to be linked
 * Different eraser type (Circle)
 * Fill Function
