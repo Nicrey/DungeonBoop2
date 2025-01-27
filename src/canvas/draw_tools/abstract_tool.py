@@ -2,9 +2,8 @@
 
 class Tool():
 
-    def __init__(self, canvas, associated_tool, draw_button, secondary_button=None):
+    def __init__(self, canvas, draw_button, secondary_button=None):
         self.canvas = canvas
-        self.associated_tool = associated_tool
         self.draw_button = draw_button
         self.secondary_button = secondary_button
 
@@ -15,6 +14,9 @@ class Tool():
         pass
     
     def mouse_release(self, event):
+        pass
+    
+    def secondary_release(self, event):
         pass
 
     def mouse_move(self, event):

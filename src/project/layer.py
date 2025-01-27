@@ -6,6 +6,7 @@ from canvas.border_canvas import BorderCanvas
 from canvas.draw_canvas import DrawCanvas
 from canvas.grid_canvas import GridCanvas
 from canvas.icon_canvas import IconCanvas
+from canvas.rotated_grid_canvas import RotatedGridCanvas
 from canvas.text_canvas import TextCanvas
 
 class Layer:
@@ -17,7 +18,7 @@ class Layer:
         self.icon_canvas = IconCanvas(parent_display=controller.canvas_controller)
         self.text_canvas = TextCanvas(parent_display=controller.canvas_controller)
         self.border_canvas = BorderCanvas(parent_display=controller.canvas_controller, draw_canvas=self.draw_canvas)
-        self.grid_canvas = GridCanvas(parent_display=controller.canvas_controller, draw_canvas=self.draw_canvas)
+        self.grid_canvas = RotatedGridCanvas(parent_display=controller.canvas_controller, draw_canvas=self.draw_canvas)
 
 
     def get_canvases(self):

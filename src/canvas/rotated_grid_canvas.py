@@ -1,10 +1,13 @@
+import math
 from PySide6.QtWidgets import ( QWidget)
 from PySide6.QtGui import  QImage, QPainter
 from PySide6.QtCore import Qt, QPoint
 
+from canvas.draw_tools.utils.grid_utils import rotate_point
 
 
-class GridCanvas(QWidget):
+
+class RotatedGridCanvas(QWidget):
         
     def __init__(self, parent_display=None, draw_canvas=None):
         super().__init__()
@@ -12,32 +15,37 @@ class GridCanvas(QWidget):
 
         self.width = 800
         self.height = 600
+        
         # Initialize the drawing surface
         self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
 
-        self.grid_start = []
+        self.grid_start = {}
         self.draw_canvas = draw_canvas
         self.draw_canvas.register_grid(self)
-        self.update_grid(16)
+        self.update_grid(16, 0)
         
 
-    def update_grid(self, grid_size):
+    def update_grid(self, grid_size, grid_angle):
         dx = 0
         dy = 0
         grid_points = []
-        self.grid_start = []
-        while (dx < self.width):
-            dy = 0
-            y_starts = []
+        self.grid_start = {}
+        while (dx < self.width*2):
+            dy = -self.height*2
             while(dy < self.height):
-                y_starts.append(QPoint(dx, dy))
-                grid_points.append(QPoint(dx, dy))
+                x,y= rotate_point(dx,dy, -grid_angle)
+                point = QPoint(x,y)
+                if point.x() < 0 or point.y() < 0 or point.x() > self.width or point.y() > self.height:
+                    dy += grid_size
+                    continue
+                self.grid_start[(dx//grid_size, dy//grid_size)] = QPoint(dx,dy)
+                grid_points.append(point)
                 dy += grid_size
             dx += grid_size
-            self.grid_start.append(y_starts)
         self.paint_grid(grid_points)
 
+        
     def paint_grid(self, grid_points):
         self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
@@ -45,3 +53,4 @@ class GridCanvas(QWidget):
         painter.setPen(Qt.black)
         for point in grid_points:
             painter.drawPoint(point)
+            painter.drawPoint(QPoint(10,10))

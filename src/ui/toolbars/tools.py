@@ -16,7 +16,6 @@ class DrawTool(Enum):
     PATH_DRAW = "P"
     POLYGON_DRAW = "POL"
     GRID_RECT_ADD = "GR+"
-    GRID_RECT_SUBTRACT = "GR-"
 
 class IconTool(Enum):
     ADD_ICON = "+"

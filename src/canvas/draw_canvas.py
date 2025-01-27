@@ -31,18 +31,17 @@ class DrawCanvas(QWidget):
         self.init_tools()
 
     def init_tools(self):
-        self.tools = [
-            FreehandDraw(self, DrawTool.ADD, Qt.LeftButton),
-            FreehandEraser(self, DrawTool.SUBTRACT, Qt.LeftButton),
-            RectInserter(self, DrawTool.RECT_ADD, Qt.LeftButton),
-            RectDrag(self, DrawTool.RECT_DRAG, Qt.LeftButton),
-            CircleInserter(self, DrawTool.CIRCLE_ADD, Qt.LeftButton),
-            CircleDrag(self, DrawTool.CIRCLE_DRAG, Qt.LeftButton),
-            PathTool(self, DrawTool.PATH_DRAW, Qt.LeftButton),
-            PolygonTool(self, DrawTool.POLYGON_DRAW, Qt.LeftButton, Qt.RightButton),
-            GridRectDraw(self, DrawTool.GRID_RECT_ADD, Qt.LeftButton),
-            GridRectErase(self, DrawTool.GRID_RECT_SUBTRACT, Qt.LeftButton)
-        ]
+        self.tools = {
+            DrawTool.ADD: FreehandDraw(self, Qt.LeftButton),
+            DrawTool.SUBTRACT: FreehandEraser(self, Qt.LeftButton),
+            DrawTool.RECT_ADD: RectInserter(self, Qt.LeftButton),
+            DrawTool.RECT_DRAG: RectDrag(self, Qt.LeftButton),
+            DrawTool.CIRCLE_ADD: CircleInserter(self, Qt.LeftButton),
+            DrawTool.CIRCLE_DRAG: CircleDrag(self, Qt.LeftButton),
+            DrawTool.PATH_DRAW: PathTool(self, Qt.LeftButton),
+            DrawTool.POLYGON_DRAW: PolygonTool(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.GRID_RECT_ADD: GridRectDraw(self, Qt.LeftButton, Qt.RightButton)
+        }
 
     def register_grid(self, grid_canvas):
         self.grid_canvas = grid_canvas
@@ -52,44 +51,40 @@ class DrawCanvas(QWidget):
         return self.parent_display.controller.current_tool
     
     def mousePressEvent(self, event: QMouseEvent):
-        for tool in self.tools:
-            if tool.associated_tool == self.get_tool() and event.button() == tool.draw_button:
-                tool.mouse_press(event)
-                return
-            if tool.associated_tool == self.get_tool() and event.button() == tool.secondary_button:
-                tool.secondary_press(event)
-                return
+        tool = self.tools[self.get_tool()]
+        if event.button() == tool.draw_button:
+            tool.mouse_press(event)
+            return
+        if event.button() == tool.secondary_button:
+            tool.secondary_press(event)
+            return
 
     def mouseMoveEvent(self, event: QMouseEvent):
         # Update the cursor position for the preview
         self.preview_position = event.pos()
         self.parent_display.update()
-        for tool in self.tools:
-            if tool.associated_tool == self.get_tool():
-                tool.mouse_move(event)
-                return
-
+        tool = self.tools[self.get_tool()]
+        tool.mouse_move(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        for tool in self.tools:
-            if tool.associated_tool == self.get_tool() and event.button() == tool.draw_button:
-                tool.mouse_release(event)
-                return
+        tool = self.tools[self.get_tool()]
+        if event.button() == tool.draw_button:
+            tool.mouse_release(event)
+            return
+        if event.button() == tool.secondary_button:
+            tool.secondary_release(event)
+            return
 
     def paint(self, painter):
         if not self.preview_position:
             return 
-        for tool in self.tools:
-            if tool.associated_tool == self.get_tool():
-                tool.paint(painter)
-                return
+        tool = self.tools[self.get_tool()]
+        tool.paint(painter)
 
 
     def update_options(self):
         self.options = self.parent_display.controller.get_options()
-        
-        for tool in self.tools:
-            if tool.associated_tool == self.get_tool():
-                tool.update_options(self.options)
+        tool = self.tools[self.get_tool()]
+        tool.update_options(self.options)
 
   

@@ -39,7 +39,7 @@ def prepare_painter(preview, painter, canvas=None):
     return painter
 
 def normal_draw_brush(painter):
-    brush = QBrush(QColor(230,230,230,255))
+    brush = QBrush(QColor(200,200,200,255))
     painter.setBrush(brush)
     return painter
 
