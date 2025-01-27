@@ -4,7 +4,6 @@ from PySide6.QtCore import Qt
 
 from canvas.border_canvas import BorderCanvas
 from canvas.draw_canvas import DrawCanvas
-from canvas.grid_canvas import GridCanvas
 from canvas.icon_canvas import IconCanvas
 from canvas.rotated_grid_canvas import RotatedGridCanvas
 from canvas.text_canvas import TextCanvas

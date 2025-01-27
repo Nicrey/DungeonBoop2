@@ -8,7 +8,6 @@ from canvas.draw_tools.circle_inserter import CircleInserter
 from canvas.draw_tools.freehand_draw import FreehandDraw
 from canvas.draw_tools.freehand_erase import FreehandEraser
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
-from canvas.draw_tools.grid_rect_eraser import GridRectErase
 from canvas.draw_tools.path_tool import PathTool
 from canvas.draw_tools.polygon_tool import PolygonTool
 from canvas.draw_tools.rect_drag import RectDrag
