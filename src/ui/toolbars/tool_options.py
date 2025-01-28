@@ -26,7 +26,7 @@ class LimitedSliderOption:
         slider = QSlider(Qt.Horizontal)
         slider.setRange(0, len(self.values)-1)
         slider.setValue(0)
-        slider.setFixedWidth(150) 
+        slider.setFixedWidth(100) 
         size_label = QLabel(str(self.get_value()))
         slider.valueChanged.connect(self.direct_update)
         # Add widgets to the toolbar
@@ -71,7 +71,7 @@ class SizeOption:
         slider = QSlider(Qt.Horizontal)
         slider.setRange(self.min, self.max)
         slider.setValue(self.current_size)
-        slider.setFixedWidth(150) 
+        slider.setFixedWidth(100) 
         size_label = QLabel(str(self.current_size))
         slider.valueChanged.connect(self.direct_update)
         # Add widgets to the toolbar

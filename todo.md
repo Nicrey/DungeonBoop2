@@ -1,6 +1,6 @@
 * Priority
-    * Icon rotation
     * Rect Rotation, Circle Rotation
+    * Circle/Rect erasing as checkmark
 
 Other:
 
