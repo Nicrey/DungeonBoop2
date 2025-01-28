@@ -1,3 +1,4 @@
+import os
 from typing import List
 from PySide6.QtWidgets import (
     QSlider,QPushButton, QLabel, QLineEdit, QFontComboBox, QComboBox, QCheckBox
@@ -101,15 +102,18 @@ class IconSelectOption:
     def __init__(self,name, controller):
         self.name = name
         self.controller = controller
-        self.icon_list = [
-            Icon("../resources/icons/down.png"),
-            Icon("../resources/icons/up.png")
-        ]
+        self.icon_list = self.load_icons()
         self.widgets = []
 
     def get_icon(self):
         return QPixmap(self.icon_list[self.selected_idx].path)
 
+    def load_icons(self):
+        icons_path = "../resources/icons"
+        icon_files = [f for f in os.listdir(icons_path) if os.path.isfile(os.path.join(icons_path, f))]
+        return [Icon(os.path.join(icons_path, f)) for f in icon_files]
+
+    
     def select_icon(self, new_idx):
         self.selected_idx = new_idx
         for i,btn in enumerate(self.widgets):

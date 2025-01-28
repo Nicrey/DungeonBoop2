@@ -79,13 +79,16 @@ class IconCanvas(QWidget):
             self.eraser_size = self.options[0].current_size
             
     def draw_icon(self, painter, position, preview=False):
+        
         scaled_icon = self.icon.scaled(self.icon_size, self.icon_size, Qt.KeepAspectRatio)
+        tintx = scaled_icon.width()
+        tinty = scaled_icon.height()
         position = position - QPoint(self.icon_size // 2, self.icon_size // 2)
         painter.drawPixmap(position, scaled_icon)
         if not preview:
             painter.setBrush(self.color_tint)  # Red color with 50% opacity
             painter.setPen(Qt.NoPen)  # No border
-            painter.drawRect(QRect(position, QSize(self.icon_size, self.icon_size)))
+            painter.drawRect(QRect(position, QSize(tintx,tinty)))
     
     def erase(self):
         painter = QPainter(self.pixmap)

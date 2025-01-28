@@ -44,7 +44,7 @@ def draw_line(start, end, canvas, width, painter=None):
     if not painter:
         painter = QPainter(canvas.pixmap)
         preview = False
-    pen = QPen(QColor(230,230,230,255))
+    pen = QPen(QColor(200,200,200,255))
     pen.setWidth(width)
     painter.setPen(pen)
     painter = normal_draw_brush(painter)
