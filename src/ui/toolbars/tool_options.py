@@ -12,10 +12,11 @@ class LimitedSliderOption:
     name: str
     values = []
 
-    def __init__(self, name, controller, values = []):
+    def __init__(self, name, controller, values = [], default=0):
         self.name = name
         self.controller = controller
         self.values = values
+        self.current_value = default
 
     def get_value(self):
         return self.values[self.current_value]

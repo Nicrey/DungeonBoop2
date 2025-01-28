@@ -23,7 +23,7 @@ class RotatedGridCanvas(QWidget):
         self.grid_start = {}
         self.draw_canvas = draw_canvas
         self.draw_canvas.register_grid(self)
-        self.update_grid(8, 0)
+        self.update_grid(32, 0)
         
 
     def update_grid(self, grid_size, grid_angle):

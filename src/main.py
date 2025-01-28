@@ -151,10 +151,10 @@ class MainWindow(QMainWindow):
             DrawTool.CIRCLE_DRAG: [CheckboxOption("Circle", self),CheckboxOption("By Midpoint", self)],
             DrawTool.PATH_DRAW: [SizeOption("Path Width", self, 10, 5, 100), CheckboxOption("Snap", self)],
             DrawTool.POLYGON_DRAW: [CheckboxOption("Snap", self)],
-            DrawTool.GRID_RECT_ADD: [LimitedSliderOption("Grid Size", self, values=[8,16,24,32,40,48,56,64]), LimitedSliderOption("Grid Rotation", self, values=[0,15,30,45,60,75,90])],
-            IconTool.ADD_ICON: [SizeOption("Size",self, 25, 5, 50), ColorOption("Tint", self), IconSelectOption("Icon",self)],
+            DrawTool.GRID_RECT_ADD: [LimitedSliderOption("Grid Size", self, values=[8,16,24,32,40,48,56,64], default=3), LimitedSliderOption("Grid Rotation", self, values=[0,15,30,45,60,75,90])],
+            IconTool.ADD_ICON: [SizeOption("Size",self, 25, 5, 50), LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90]), ColorOption("Tint", self), IconSelectOption("Icon",self)],
             IconTool.REMOVE_ICON: [SizeOption("Size", self, 16, 4, 200)],
-            TextTool.ADD_TEXT: [SizeOption("FontSize",self, 16, 4, 200), FontSelectOption("Font",self), TextOption("Text", self)],
+            TextTool.ADD_TEXT: [SizeOption("FontSize",self, 16, 4, 200), ColorOption("Color", self),FontSelectOption("Font",self), TextOption("Text", self)],
             TextTool.REMOVE_TEXT: [SizeOption("Size", self, 16, 4, 200)]
         }
     

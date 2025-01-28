@@ -14,7 +14,7 @@ class TextCanvas(QWidget):
         # Initialize the drawing surface
         self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
-
+        self.color = None
         self.text = ""
         self.text_size = 12
 
@@ -65,8 +65,9 @@ class TextCanvas(QWidget):
     def update_options(self):
         self.options = self.parent_display.controller.get_options()
         if self.get_tool() == TextTool.ADD_TEXT:
-            self.text = self.options[2].text
-            self.font = self.options[1].get_font()
+            self.text = self.options[3].text
+            self.font = self.options[2].get_font()
+            self.color = self.options[1].color
             self.text_size = self.options[0].current_size
             self.erasing = False
         if self.get_tool() == TextTool.REMOVE_TEXT:
@@ -75,6 +76,9 @@ class TextCanvas(QWidget):
 
     def draw_text(self, painter, position):
         painter.setPen(Qt.black)
+        if self.color and self.color != QColor(0,0,0, 0):
+            self.color.setAlpha(255)
+            painter.setPen(self.color)
         font = painter.font()
         font.setPointSize(self.text_size)
         font.setFamily(self.font)

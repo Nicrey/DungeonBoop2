@@ -71,8 +71,9 @@ class IconCanvas(QWidget):
     def update_options(self):
         self.options = self.parent_display.controller.get_options()
         if self.get_tool() == IconTool.ADD_ICON:
-            self.icon = self.options[2].get_icon()
-            self.color_tint = self.options[1].color
+            self.icon = self.options[3].get_icon()
+            self.color_tint = self.options[2].color
+            self.rotation = self.options[1].get_value()
             self.icon_size = self.options[0].current_size
             self.erasing = False
         if self.get_tool() == IconTool.REMOVE_ICON:
@@ -84,11 +85,22 @@ class IconCanvas(QWidget):
         tintx = scaled_icon.width()
         tinty = scaled_icon.height()
         position = position - QPoint(self.icon_size // 2, self.icon_size // 2)
+        x_shift = position.x()
+        y_shift = position.y()
+        if self.rotation != 0:
+            painter.translate(position.x(), position.y())
+            painter.rotate(self.rotation)
+            position = QPoint(-self.icon_size // 2, -self.icon_size // 2)
         painter.drawPixmap(position, scaled_icon)
         if not preview:
             painter.setBrush(self.color_tint)  # Red color with 50% opacity
             painter.setPen(Qt.NoPen)  # No border
             painter.drawRect(QRect(position, QSize(tintx,tinty)))
+        else:
+            if self.rotation != 0:
+                painter.rotate(-self.rotation)
+                painter.translate(-x_shift, -y_shift)
+            
     
     def erase(self):
         painter = QPainter(self.pixmap)

@@ -14,6 +14,8 @@ class CanvasController(QWidget):
     Also draws inactive canvases greyed out
     """
     BORDER_INDEX = 3
+    GRID_INDEX = 4
+    
     def __init__(self, controller):
         super().__init__()
         self.controller = controller 
@@ -37,6 +39,8 @@ class CanvasController(QWidget):
                 # Draw active canvas normally
                 painter.drawImage(0, 0, canvas.pixmap)
                 canvas.paint(painter)
+            elif index == self.GRID_INDEX and self.active_canvas_idx() != 0:
+                continue
             else:
                 # Grey out inactive canvases
                 painter.setOpacity(0.5)  # Set transparency for inactive canvases
