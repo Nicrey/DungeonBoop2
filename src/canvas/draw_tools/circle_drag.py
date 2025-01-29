@@ -4,11 +4,18 @@ from canvas.draw_tools.utils.draw_utils import draw_circle_2points
 
 class CircleDrag(Tool):
 
+    
     start_pos = None
     circle = False
     by_midpoint = True
+    erasing = False
 
     def mouse_press(self, event):
+        self.erasing = False
+        self.start_pos = event.pos()
+    
+    def secondary_press(self, event):
+        self.erasing = True
         self.start_pos = event.pos()
 
     def mouse_release(self, event):
@@ -19,6 +26,17 @@ class CircleDrag(Tool):
                             by_midpoint=self.by_midpoint)
         self.canvas.parent_display.canvas_changes()
         self.start_pos = None
+        
+    def secondary_release(self, event):
+        draw_circle_2points(self.canvas,
+                    self.start_pos,
+                    event.pos(),
+                    true_circle=self.circle,
+                    by_midpoint=self.by_midpoint,
+                    erase=True)
+        self.canvas.parent_display.canvas_changes()
+        self.start_pos = None
+        self.erasing = False
 
     def paint(self, painter):
         if self.start_pos:

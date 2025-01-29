@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
 
         init_shortcuts(self)
         self.mode = Mode.DRAW
-        self.current_tool = DrawTool.ADD
+        self.current_tool = DrawTool.FREEHAND
         self.setup_tool_option_map()
         
 
@@ -143,15 +143,13 @@ class MainWindow(QMainWindow):
     def setup_tool_option_map(self):
                 # Third Layer tool map
         self.THIRD_LAYER_TOOL_MAP = {
-            DrawTool.ADD : [
+            DrawTool.FREEHAND : [
                 SizeOption("Brush Size", self, 16, 4, 200)
-            ],
-            DrawTool.SUBTRACT: [
-                SizeOption("Eraser Size", self, 16, 4, 200)
             ],
             DrawTool.RECT_ADD: [
                 SizeOption("X",self, 50, 5, 200),
-                SizeOption("Y",self, 50, 5, 200)
+                SizeOption("Y",self, 50, 5, 200),
+                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90])
             ],
             DrawTool.RECT_DRAG: [
                 CheckboxOption("Square", self),
@@ -159,7 +157,8 @@ class MainWindow(QMainWindow):
             ],
             DrawTool.CIRCLE_ADD: [
                 SizeOption("X",self, 50, 5, 200),
-                SizeOption("Y",self, 50, 5, 200)
+                SizeOption("Y",self, 50, 5, 200),
+                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90])
             ],
             DrawTool.CIRCLE_DRAG: [
                 CheckboxOption("Circle", self),

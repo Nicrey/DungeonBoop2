@@ -6,7 +6,6 @@ from PySide6.QtCore import Qt, QPoint, QRect
 from canvas.draw_tools.circle_drag import CircleDrag
 from canvas.draw_tools.circle_inserter import CircleInserter
 from canvas.draw_tools.freehand_draw import FreehandDraw
-from canvas.draw_tools.freehand_erase import FreehandEraser
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
 from canvas.draw_tools.path_tool import PathTool
 from canvas.draw_tools.polygon_tool import PolygonTool
@@ -31,13 +30,12 @@ class DrawCanvas(QWidget):
 
     def init_tools(self):
         self.tools = {
-            DrawTool.ADD: FreehandDraw(self, Qt.LeftButton),
-            DrawTool.SUBTRACT: FreehandEraser(self, Qt.LeftButton),
-            DrawTool.RECT_ADD: RectInserter(self, Qt.LeftButton),
-            DrawTool.RECT_DRAG: RectDrag(self, Qt.LeftButton),
-            DrawTool.CIRCLE_ADD: CircleInserter(self, Qt.LeftButton),
-            DrawTool.CIRCLE_DRAG: CircleDrag(self, Qt.LeftButton),
-            DrawTool.PATH_DRAW: PathTool(self, Qt.LeftButton),
+            DrawTool.FREEHAND: FreehandDraw(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.RECT_ADD: RectInserter(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.RECT_DRAG: RectDrag(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.CIRCLE_ADD: CircleInserter(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.CIRCLE_DRAG: CircleDrag(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.PATH_DRAW: PathTool(self, Qt.LeftButton, Qt.RightButton),
             DrawTool.POLYGON_DRAW: PolygonTool(self, Qt.LeftButton, Qt.RightButton),
             DrawTool.GRID_RECT_ADD: GridRectDraw(self, Qt.LeftButton, Qt.RightButton)
         }

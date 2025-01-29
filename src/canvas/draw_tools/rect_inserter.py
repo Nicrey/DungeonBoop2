@@ -13,19 +13,25 @@ class RectInserter(Tool):
     
     rect_x = 32
     rect_y = 32
+    rotation = 0
 
     def mouse_release(self, event):
         rect = get_rect(event.pos(), self.rect_x, self.rect_y)
-        draw_rect(self.canvas, rect)
+        draw_rect(self.canvas, rect, angle=self.rotation)
         self.canvas.parent_display.canvas_changes()
 
+    def secondary_release(self, event):
+        rect = get_rect(event.pos(), self.rect_x, self.rect_y)
+        draw_rect(self.canvas, rect, angle=self.rotation, erase=True)
+        self.canvas.parent_display.canvas_changes()
 
     def paint(self, painter):
         painter.setOpacity(0.5)
         rect = get_rect(self.canvas.preview_position, self.rect_x, self.rect_y)
-        draw_rect(self.canvas, rect, True, painter=painter)
+        draw_rect(self.canvas, rect, True, painter=painter, angle=self.rotation)
         painter.setOpacity(1.0)
 
     def update_options(self, options):
         self.rect_x = options[0].current_size
         self.rect_y = options[1].current_size
+        self.rotation = options[2].get_value()

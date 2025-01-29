@@ -7,8 +7,7 @@ class Mode(Enum):
     TEXT = "Text"
 
 class DrawTool(Enum):
-    ADD = "+"
-    SUBTRACT = "-"
+    FREEHAND = "🖊️"
     RECT_ADD = "R+"
     RECT_DRAG = "RD"
     CIRCLE_ADD = "C+"
