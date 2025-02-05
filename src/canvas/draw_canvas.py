@@ -8,9 +8,11 @@ from canvas.draw_tools.circle_inserter import CircleInserter
 from canvas.draw_tools.freehand_draw import FreehandDraw
 from canvas.draw_tools.grid_rect_drawer import GridRectDraw
 from canvas.draw_tools.path_tool import PathTool
+from canvas.draw_tools.polygon_drag import PolygonDragTool
 from canvas.draw_tools.polygon_tool import PolygonTool
 from canvas.draw_tools.rect_drag import RectDrag
 from canvas.draw_tools.rect_inserter import RectInserter
+import config
 from ui.toolbars.tools import DrawTool
 
 
@@ -21,7 +23,7 @@ class DrawCanvas(QWidget):
         self.parent_display = parent_display  # Reference to CanvasController
 
         # Initialize the drawing surface
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
 
         self.options = self.parent_display.controller.get_options()
@@ -37,6 +39,7 @@ class DrawCanvas(QWidget):
             DrawTool.CIRCLE_DRAG: CircleDrag(self, Qt.LeftButton, Qt.RightButton),
             DrawTool.PATH_DRAW: PathTool(self, Qt.LeftButton, Qt.RightButton),
             DrawTool.POLYGON_DRAW: PolygonTool(self, Qt.LeftButton, Qt.RightButton),
+            DrawTool.POLYGON_DRAG: PolygonDragTool(self, Qt.LeftButton, Qt.RightButton),
             DrawTool.GRID_RECT_ADD: GridRectDraw(self, Qt.LeftButton, Qt.RightButton)
         }
 

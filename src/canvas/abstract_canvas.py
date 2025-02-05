@@ -2,6 +2,8 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import QPainter, QMouseEvent, QPen, QImage
 from PySide6.QtCore import Qt, QPoint
 
+import config
+
 
 class AbstractCanvas(QWidget):
 
@@ -14,7 +16,7 @@ class AbstractCanvas(QWidget):
         self.parent_display = parent_display  # Reference to CanvasDisplay
 
         # Initialize the drawing surface
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
 
     def mousePressEvent(self, event: QMouseEvent):

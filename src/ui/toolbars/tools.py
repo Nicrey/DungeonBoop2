@@ -8,13 +8,14 @@ class Mode(Enum):
 
 class DrawTool(Enum):
     FREEHAND = "🖊️"
-    RECT_ADD = "R+"
-    RECT_DRAG = "RD"
-    CIRCLE_ADD = "C+"
-    CIRCLE_DRAG = "CD"
-    PATH_DRAW = "P"
-    POLYGON_DRAW = "POL"
-    GRID_RECT_ADD = "GR+"
+    RECT_ADD = "🔲"
+    RECT_DRAG = "🔲↔️"
+    CIRCLE_ADD = "⚪"
+    CIRCLE_DRAG = "⚪↔️"
+    PATH_DRAW = "╲"
+    POLYGON_DRAW = "△🖊️"
+    POLYGON_DRAG = "△↔"
+    GRID_RECT_ADD = "Grid"
 
 class IconTool(Enum):
     ADD_ICON = "+"

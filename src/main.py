@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QInputDialog, QLineEdit, QMainWindow, QVBoxLayout, QWidget)
 
 from canvas.canvas_controller import CanvasController
+import config
 from file_handler import save_project
 from project.project import Project
 from ui.layer_preview import LayerPreview
@@ -24,7 +25,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("PySide6 Paint App")
-        self.setFixedSize(1000, 700)
+        self.setFixedSize(config.WIDTH+100, config.HEIGHT+100)
         
         # MenuBar
         self.menu_bar = FileMenu(self)
@@ -158,11 +159,13 @@ class MainWindow(QMainWindow):
             DrawTool.CIRCLE_ADD: [
                 SizeOption("X",self, 50, 5, 200),
                 SizeOption("Y",self, 50, 5, 200),
-                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90])
+                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90]),
+                CheckboxOption("GridSnap", self)
             ],
             DrawTool.CIRCLE_DRAG: [
                 CheckboxOption("Circle", self),
-                CheckboxOption("By Midpoint", self)
+                CheckboxOption("By Midpoint", self),
+                CheckboxOption("GridSnap", self)
             ],
             DrawTool.PATH_DRAW: [
                 SizeOption("Path Width", self, 10, 5, 100),
@@ -171,13 +174,17 @@ class MainWindow(QMainWindow):
             DrawTool.POLYGON_DRAW: [
                 CheckboxOption("Snap", self)
             ],
+            DrawTool.POLYGON_DRAG: [
+                SizeOption("Sides", self, 5, 3, 20),
+                CheckboxOption("Snap", self) 
+            ],
             DrawTool.GRID_RECT_ADD: [
                 LimitedSliderOption("Grid Size", self, values=[8,16,24,32,40,48,56,64], default=3),
                 LimitedSliderOption("Grid Rotation", self, values=[0,15,30,45,60,75,90])
             ],
             IconTool.ADD_ICON: [
                 SizeOption("Size",self, 25, 5, 50),
-                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90]),
+                LimitedSliderOption("Rotation", self, values=[0,15,30,45,60,75,90,105,120,135,150,165,180]),
                 ColorOption("Tint", self), IconSelectOption("Icon",self)
             ],
             IconTool.REMOVE_ICON: [

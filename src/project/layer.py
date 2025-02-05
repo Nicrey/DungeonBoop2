@@ -7,6 +7,7 @@ from canvas.draw_canvas import DrawCanvas
 from canvas.icon_canvas import IconCanvas
 from canvas.rotated_grid_canvas import RotatedGridCanvas
 from canvas.text_canvas import TextCanvas
+import config
 
 class Layer:
 
@@ -40,8 +41,8 @@ class Layer:
         return self.get_combined_image(preview=True)
     
     def get_combined_image(self, preview = False):
-        image_x = 800 if not preview else 400
-        image_y = 600 if not preview else 250
+        image_x = config.WIDTH  if not preview else 400
+        image_y = config.HEIGHT if not preview else 250
         combined = QImage(image_x, image_y, QImage.Format_ARGB32)
         combined.fill(Qt.white)
         painter = QPainter(combined)

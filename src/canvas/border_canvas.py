@@ -4,6 +4,7 @@ from PySide6.QtGui import QPainter, QPixmap, QMouseEvent, QImage, QColor
 from PySide6.QtCore import Qt, QPoint, QRect
 from scipy.ndimage import convolve
 
+import config
 from ui.toolbars.tools import DrawTool
 from scipy.ndimage import binary_dilation
 
@@ -16,7 +17,7 @@ class BorderCanvas(QWidget):
         self.parent_display = parent_display  # Reference to CanvasController
 
         # Initialize the drawing surface
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
         self.draw_canvas = draw_canvas
 
@@ -29,7 +30,7 @@ class BorderCanvas(QWidget):
         Blacken pixels in this canvas's pixmap based on transparency in another pixmap.
         Optimized with numpy for speed.
         """
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
         source_image = self.draw_canvas.pixmap
         source_width, source_height = source_image.width(), source_image.height()

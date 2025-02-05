@@ -4,6 +4,7 @@ from PySide6.QtGui import  QImage, QPainter
 from PySide6.QtCore import Qt, QPoint
 
 from canvas.draw_tools.utils.grid_utils import rotate_point
+import config
 
 
 
@@ -17,7 +18,7 @@ class RotatedGridCanvas(QWidget):
         self.height = 600
         
         # Initialize the drawing surface
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
 
         self.grid_start = {}
@@ -47,7 +48,7 @@ class RotatedGridCanvas(QWidget):
 
         
     def paint_grid(self, grid_points):
-        self.pixmap = QImage(800, 600, QImage.Format_ARGB32)
+        self.pixmap = QImage(config.WIDTH, config.HEIGHT, QImage.Format_ARGB32)
         self.pixmap.fill(Qt.transparent)
         painter = QPainter(self.pixmap)
         painter.setPen(Qt.black)
