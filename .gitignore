@@ -1,3 +1,6 @@
 gpt_test.py
 *__pycache__*
 *DungeonBoopMaps*
+main.spec
+/dist/
+/build/

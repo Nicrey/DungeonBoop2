@@ -21,7 +21,7 @@ def save_project_as(p: Project, controller):
     """Saves the project to disc imploring a filedialog first"""
     selected_path = QFileDialog.getExistingDirectory(controller, "Select Project Save Location")
     if selected_path:
-        p.save_path = selected_path
+        p.save_path = os.path.join(selected_path, p.name)
         save_project(p, controller)
     
     
@@ -31,7 +31,7 @@ def save_project(p: Project, controller):
     if not p.save_path:
         save_project_as(p, controller)
     # Create main project folder if not exists
-    main_folder = os.path.join(p.save_path , p.name)
+    main_folder = p.save_path
     os.makedirs(main_folder, exist_ok=True)
     final_folder = os.path.join(main_folder, "finals")
     os.makedirs(final_folder, exist_ok=True)

@@ -2,6 +2,7 @@ import sys
 from typing import Any
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QInputDialog, QLineEdit, QMainWindow, QVBoxLayout, QWidget)
 
@@ -24,7 +25,8 @@ from ui.toolbars.tools import (DrawTool, IconTool, LayerTool, Mode, TextTool,
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("PySide6 Paint App")
+        self.setWindowTitle("DungeonBoop 2")
+        self.setWindowIcon(QIcon("../favicon.ico"))
         self.setFixedSize(config.WIDTH+100, config.HEIGHT+100)
         
         # MenuBar
